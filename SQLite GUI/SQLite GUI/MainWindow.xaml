@@ -1,0 +1,53 @@
+﻿<Window x:Class="SQLite_GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SQLite_GUI"
+        mc:Ignorable="d"
+        Title="SQLite GUI" Height="450" Width="800">
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+    </Window.Resources>
+    <Border Padding="10 10 10 0">
+
+        <Grid x:Name="Container">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="0.7*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="9*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <RichTextBox x:Name="InputText" Grid.Column="0" AcceptsReturn="True"/>
+                <Button x:Name="RunButton" Grid.Column="1" Content="RUN" Click="RunButton_Click"/>
+            </Grid>
+
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="9*" />
+                </Grid.ColumnDefinitions>
+
+                <DataGrid x:Name="OutputGrid" AutoGenerateColumns="True" Grid.Column="1"/>
+
+                <ListBox x:Name="TablesList" Grid.Column="0" SelectionChanged="TablesList_SelectionChanged" >
+                    
+                </ListBox>
+
+            </Grid>
+            
+            <Label x:Name="MessageLabel" Grid.Row="2" Content="TEST"/>
+        </Grid>
+    </Border>
+</Window>
