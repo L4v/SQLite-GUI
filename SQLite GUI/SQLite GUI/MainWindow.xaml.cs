@@ -7,8 +7,11 @@ using System.Collections.ObjectModel;
 using System.Collections;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace SQLite_GUI
+
+    // TODO
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -40,7 +43,7 @@ namespace SQLite_GUI
         private void NewGUI()
         {
             // Clears input text
-            this.InputText.Document.Blocks.Clear();
+            //this.InputText.Document.Blocks.Clear();
 
             // Clear message label
             this.MessageLabel.Content = String.Empty;
@@ -57,33 +60,42 @@ namespace SQLite_GUI
         /// </summary>
         /// <param name="sender">Button which was clicked</param>
         /// <param name="e">Event object</param>
-        private void RunButton_Click(object sender, RoutedEventArgs e)
+        /* private void RunButton_Click(object sender, RoutedEventArgs e)
+         {
+             // Open connection
+             database.OpenConnection();
+
+             // Create new data table
+             dataTable = new DataTable();
+
+             // Input text to make a commands
+             string query = new TextRange(InputText.Document.ContentStart, InputText.Document.ContentEnd).Text;
+
+             // Create new data adapter
+             dataAdapter = new SQLiteDataAdapter(query, database.myConnection);
+
+             // Fill table
+             dataAdapter.Fill(dataTable);
+
+             // Sets default view for the table
+             OutputGrid.ItemsSource = dataTable.DefaultView;
+
+             // Sample message
+             this.MessageLabel.Content = "Command executed";
+
+             UpdateTableList();
+
+             // Close connection
+             database.CloseConnection();
+         }
+         */
+
+        /// <summary>
+        /// Creates a new table if one doesn't exist already
+        /// </summary>
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Open connection
-            database.OpenConnection();
 
-            // Create new data table
-            dataTable = new DataTable();
-
-            // Input text to make a commands
-            string query = new TextRange(InputText.Document.ContentStart, InputText.Document.ContentEnd).Text;
-
-            // Create new data adapter
-            dataAdapter = new SQLiteDataAdapter(query, database.myConnection);
-
-            // Fill table
-            dataAdapter.Fill(dataTable);
-            
-            // Sets default view for the table
-            OutputGrid.ItemsSource = dataTable.DefaultView;
-
-            // Sample message
-            this.MessageLabel.Content = "Command executed";
-
-            UpdateTableList();
-            
-            // Close connection
-            database.CloseConnection();
         }
 
         /// <summary>
@@ -94,7 +106,7 @@ namespace SQLite_GUI
         private void TablesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Take the name from selected item in ListBox, the name starts at the 37th character
-            string name = this.TablesList.SelectedItem.ToString().Substring(37);
+            string name = GetSelectedItem();
             ShowTable(name);
         }
         #endregion
@@ -103,32 +115,21 @@ namespace SQLite_GUI
         /// Update tables list
         /// </summary>
         private void UpdateTableList() {
-            // Open connection
-            database.OpenConnection();
-
-            // Create new connection
-            SQLiteConnection connection = new SQLiteConnection(database.myConnection);
-
-            // Sqlite data reader
-            SQLiteDataReader reader = GetCommand("SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY 1").ExecuteReader();
 
             // Clear list
             this.TablesList.Items.Clear();
 
+            // A listboxitem object to be added
             ListBoxItem item;
 
-
-            // TODO: DODATI DOUBLE CLICK NA LIST ITEM
-
-            while (reader.Read())
+            // Creates a new listbox item object and adds it to the TablesList listbox
+            foreach (string name in GetTableNames())
             {
                 item = new ListBoxItem();
-                item.Content = (string)reader["name"];
+                item.Content = name;
                 TablesList.Items.Add(item);
             }
-
-            // Close connection
-            database.CloseConnection();
+            
         }
 
         /// <summary>
@@ -160,6 +161,8 @@ namespace SQLite_GUI
             database.CloseConnection();
         }
 
+
+
         #region getters
 
         /// <summary>
@@ -174,7 +177,55 @@ namespace SQLite_GUI
             return command;
         }
 
+        /// <summary>
+        /// Returns selected item name
+        /// </summary>
+        /// <returns></returns>
+        private String GetSelectedItem()
+        {
+            // Return name of item
+            return this.TablesList.SelectedItem.ToString().Substring(37);
+        }
+
+        /// <summary>
+        /// Gets a list of table names
+        /// </summary>
+        /// <returns></returns>
+        private List<string> GetTableNames()
+        {
+            // List of string names
+            List<string> names = new List<string>();
+
+            // Open connection
+            database.OpenConnection();
+
+            // Create new connection
+            SQLiteConnection connection = new SQLiteConnection(database.myConnection);
+
+            // Sqlite data reader
+            SQLiteDataReader reader = GetCommand("SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY 1").ExecuteReader();
+
+            // TODO: DODATI DOUBLE CLICK NA LIST ITEM
+
+            while (reader.Read())
+            {
+                names.Add((string)reader["name"]);
+            }
+
+            // Close connection
+            database.CloseConnection();
+
+            return names;
+        }
+
         #endregion
 
+        #region helpers
+
+        private Boolean TableExists(string name) {
+            return false;
+        }
+
+        #endregion
     }
 }
