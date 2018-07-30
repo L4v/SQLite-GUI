@@ -23,3 +23,28 @@ C:\Users\jigsaw-game\workspace\cshrp-practice\SQlite_GUI\SQLite GUI\SQLite GUI\b
 C:\Users\jigsaw-game\workspace\cshrp-practice\SQlite_GUI\SQLite GUI\SQLite GUI\bin\Debug\System.Data.SQLite.xml
 C:\Users\jigsaw-game\workspace\cshrp-practice\SQlite_GUI\SQLite GUI\SQLite GUI\bin\Debug\System.Data.SQLite.dll.config
 C:\Users\jigsaw-game\workspace\cshrp-practice\SQlite_GUI\SQLite GUI\SQLite GUI\obj\Debug\SQLite GUI.csproj.CopyComplete
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\bin\Debug\SQLite GUI.exe.config
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\bin\Debug\SQLite GUI.exe
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\bin\Debug\SQLite GUI.pdb
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\bin\Debug\EntityFramework.dll
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\bin\Debug\System.Data.SQLite.dll
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\bin\Debug\System.Data.SQLite.EF6.dll
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\bin\Debug\System.Data.SQLite.Linq.dll
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\bin\Debug\EntityFramework.xml
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\bin\Debug\System.Data.SQLite.xml
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\bin\Debug\System.Data.SQLite.dll.config
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\SQLite GUI.csprojAssemblyReference.cache
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\MainWindow.g.cs
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\App.g.cs
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\SQLite GUI_MarkupCompile.cache
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\SQLite GUI_MarkupCompile.lref
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\MainWindow.baml
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\SQLite GUI.g.resources
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\SQLite_GUI.Properties.Resources.resources
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\SQLite GUI.csproj.GenerateResource.cache
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\SQLite GUI.csproj.CoreCompileInputs.cache
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\SQLite GUI.csproj.CopyComplete
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\SQLite GUI.exe
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\SQLite GUI.pdb
