@@ -93,9 +93,11 @@ namespace SQLite_GUI
         /// <summary>
         /// Creates a new table if one doesn't exist already
         /// </summary>
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void New_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            PopUpWindow window = new PopUpWindow("Enter name of new table", "Create new table", 0);
+            window.Title = "New Table";
+            window.Show();
         }
 
         /// <summary>
@@ -110,6 +112,12 @@ namespace SQLite_GUI
             ShowTable(name);
         }
         #endregion
+
+
+        public void NewTable(string name)
+        {
+
+        }
 
         /// <summary>
         /// Update tables list

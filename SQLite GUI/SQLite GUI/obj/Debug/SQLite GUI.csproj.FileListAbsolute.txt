@@ -48,3 +48,5 @@ C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\SQ
 C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\SQLite GUI.csproj.CopyComplete
 C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\SQLite GUI.exe
 C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\SQLite GUI.pdb
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\PopUpWindow.g.cs
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\PopUpWindow.baml
