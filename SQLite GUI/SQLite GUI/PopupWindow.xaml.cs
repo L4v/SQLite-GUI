@@ -47,12 +47,13 @@ namespace SQLite_GUI
             switch (type)
             {
                 case 0:
-                    NewTable(GetInput());// Uraditi u main window?
+                    //NewTable(GetInput());// Uraditi u main window?
                     break;
 
                 case 1:
-                    DropTable(GetInput());
+                    //DropTable(GetInput());
                     break;
+                    
 
                 default:
                     return;

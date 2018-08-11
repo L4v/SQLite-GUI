@@ -8,6 +8,8 @@ using System.Collections;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Collections.Generic;
+using System.Windows.Data;
+using System.Data.SqlClient;
 
 namespace SQLite_GUI
 
@@ -100,6 +102,11 @@ namespace SQLite_GUI
             window.Show();
         }
 
+        private void Update_Button_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateTable(GetSelectedItem());
+        }
+
         /// <summary>
         /// Shows selected table in ListBox 
         /// </summary>
@@ -164,6 +171,12 @@ namespace SQLite_GUI
 
             // Info message
             this.MessageLabel.Content = "Showing table...";
+
+            // HOW TO ADD A COLUMN
+            //DataGridTextColumn textColumn = new DataGridTextColumn();
+            //textColumn.Header = "First Name";
+            //textColumn.Binding = new Binding("FirstName");
+            //OutputGrid.Columns.Add(textColumn);
 
             // Close the connection
             database.CloseConnection();
@@ -232,6 +245,21 @@ namespace SQLite_GUI
 
         private Boolean TableExists(string name) {
             return false;
+        }
+
+        /// <summary>
+        /// Updates table from edited gridview
+        /// </summary>
+        /// <param name="name">Name of table to update</param>
+        private void UpdateTable(string name) {
+
+            TODO URADITI UPDATEOVANJE TABELE DIREKTNO IZ GRIDTABLE
+
+            SQLiteDataAdapter adapter = new SQLiteDataAdapter("Select * from " + name, database.myConnection);
+
+            DataTable dt = OutputGrid.DataContext as DataTable;
+            SQLiteCommandBuilder com = new SQLiteCommandBuilder(adapter);
+            adapter.Update(dt);
         }
 
         #endregion
