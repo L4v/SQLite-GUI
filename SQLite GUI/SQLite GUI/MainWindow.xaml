@@ -52,11 +52,14 @@
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="77*" />
-                    <ColumnDefinition Width="695*" />
+                    <ColumnDefinition Width="300*" />
+                    <ColumnDefinition Width="300*"/>
                 </Grid.ColumnDefinitions>
 
                 <DataGrid x:Name="OutputGrid" AutoGenerateColumns="True" ColumnWidth="*" Grid.Column="1"/>
 
+                <DataGrid x:Name="TestGrid" AutoGenerateColumns="True" ColumnWidth="*" Grid.Column="2"/>
+                <!--695*-->
                 <ListBox x:Name="TablesList" Grid.Column="0" SelectionChanged="TablesList_SelectionChanged" >
 
                 </ListBox>

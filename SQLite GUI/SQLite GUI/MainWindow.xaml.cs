@@ -25,7 +25,9 @@ namespace SQLite_GUI
         // Create new Database object
         private Database database = new Database("test.sqlite3");
         private DataTable dataTable;
+        private DataSet dataSet;
         private SQLiteDataAdapter dataAdapter;
+        private SQLiteCommand cmd;
         #endregion
 
         #region Constructor
@@ -104,7 +106,9 @@ namespace SQLite_GUI
 
         private void Update_Button_Click(object sender, RoutedEventArgs e)
         {
-            UpdateTable(GetSelectedItem());
+            if (GetSelectedItem() != "")
+                UpdateTable(GetDataTable(GetSelectedItem()));
+            return;
         }
 
         /// <summary>
@@ -193,9 +197,9 @@ namespace SQLite_GUI
         /// <returns></returns>
         private SQLiteCommand GetCommand(string query)
         {
-            SQLiteCommand command = new SQLiteCommand(query, database.myConnection);
+            cmd = new SQLiteCommand(query, database.myConnection);
 
-            return command;
+            return cmd;
         }
 
         /// <summary>
@@ -204,8 +208,16 @@ namespace SQLite_GUI
         /// <returns></returns>
         private String GetSelectedItem()
         {
-            // Return name of item
-            return this.TablesList.SelectedItem.ToString().Substring(37);
+            try
+            {
+                // Return name of item
+                return this.TablesList.SelectedItem.ToString().Substring(37);
+            }catch(Exception e)
+            {
+                MessageLabel.Content = "Nothing is selected. " + e.Message;
+            }
+
+            return "";
         }
 
         /// <summary>
@@ -239,6 +251,30 @@ namespace SQLite_GUI
             return names;
         }
 
+        private DataTable GetDataTable(string name)
+        {
+            // DataTable for returning
+            DataTable dt = new DataTable();
+
+            // Open connection
+            database.OpenConnection();
+
+            // Fill dt with data adapter
+            cmd = GetCommand("SELECT * FROM " + name);
+            dataAdapter = new SQLiteDataAdapter(cmd);
+            dataAdapter.Fill(dt);
+
+            POPRAVITI DA SACUVA PRAVILNO PLS
+
+            // Closes conection
+            database.CloseConnection();
+
+            dt.TableName = name;
+
+            // Return dt
+            return dt;
+        }
+
         #endregion
 
         #region helpers
@@ -251,15 +287,25 @@ namespace SQLite_GUI
         /// Updates table from edited gridview
         /// </summary>
         /// <param name="name">Name of table to update</param>
-        private void UpdateTable(string name) {
+        private void UpdateTable(DataTable dt) {
 
-            TODO URADITI UPDATEOVANJE TABELE DIREKTNO IZ GRIDTABLE
+            try
+            {
+                database.OpenConnection();
+                cmd = new SQLiteCommand();
+                cmd = GetCommand("SELECT * FROM " + dt.TableName);
+                MessageBox.Show(dt.TableName);
+                dataAdapter = new SQLiteDataAdapter(cmd);
+                SQLiteCommandBuilder builder = new SQLiteCommandBuilder(dataAdapter);
 
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter("Select * from " + name, database.myConnection);
+                dataAdapter.Update(dt);
 
-            DataTable dt = OutputGrid.DataContext as DataTable;
-            SQLiteCommandBuilder com = new SQLiteCommandBuilder(adapter);
-            adapter.Update(dt);
+                database.CloseConnection();
+            }
+            catch (Exception e)
+            {
+                MessageLabel.Content = e.Message;
+            }
         }
 
         #endregion
