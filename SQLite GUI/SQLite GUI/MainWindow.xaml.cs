@@ -251,12 +251,18 @@ namespace SQLite_GUI
             return names;
         }
 
+        /// <summary>
+        /// Gets a DataTable via its name
+        /// </summary>
+        /// <param name="name">Name of DataTable to get</param>
+        /// <returns></returns>
         private DataTable GetDataTable(string name)
         {
             // DataTable for returning
             DataTable dt = new DataTable();
+            // Bogovi su poklonili ovu komandu
 
-            // Open connection
+            /*// Open connection
             database.OpenConnection();
 
             // Fill dt with data adapter
@@ -265,7 +271,11 @@ namespace SQLite_GUI
             dataAdapter.Fill(dt);
 
             // Closes conection
-            database.CloseConnection();
+            database.CloseConnection();*/
+
+            OutputGrid.Items.Refresh();
+
+            dt = ((DataView)OutputGrid.ItemsSource).ToTable();
 
             dt.TableName = name;
 
@@ -276,6 +286,39 @@ namespace SQLite_GUI
         #endregion
 
         #region helpers
+
+        /// <summary>
+        /// Executes an SQLite query
+        /// </summary>
+        /// <param name="query">Query to execute</param>
+        /// <returns></returns>
+        private int ExecuteSQLite(string query)
+        {
+            // Open connection
+            database.OpenConnection();
+
+            // Command to execute
+            cmd = GetCommand(query);
+
+            // Int to check if row has been updated
+            int row_updated;
+
+            try
+            {
+                row_updated = cmd.ExecuteNonQuery();
+            }catch(Exception e)
+            {
+                database.CloseConnection();
+                return 0;
+            }
+
+            // Close connection
+            database.CloseConnection();
+
+            // Return if row updated
+            return row_updated;
+
+        }
 
         private Boolean TableExists(string name) {
             return false;
@@ -289,14 +332,21 @@ namespace SQLite_GUI
 
             try
             {
+                ExecuteSQLite(string.Format("DELETE FROM {0}", dt.TableName));
                 database.OpenConnection();
                 cmd = new SQLiteCommand();
                 cmd = GetCommand("SELECT * FROM " + dt.TableName);
-                MessageBox.Show(dt.TableName);
+
+                // DEBUG
+                //MessageBox.Show(dt.TableName);
+
                 dataAdapter = new SQLiteDataAdapter(cmd);
                 SQLiteCommandBuilder builder = new SQLiteCommandBuilder(dataAdapter);
 
-                this.OutputGrid.ItemsSource = dt.DefaultView;
+                // DEBUG
+                //this.OutputGrid.ItemsSource = dt.DefaultView;
+                //var modRow = dt.GetChanges(DataRowState.Modified);
+
                 dataAdapter.Update(dt);
 
                 database.CloseConnection();
