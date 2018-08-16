@@ -264,8 +264,6 @@ namespace SQLite_GUI
             dataAdapter = new SQLiteDataAdapter(cmd);
             dataAdapter.Fill(dt);
 
-            POPRAVITI DA SACUVA PRAVILNO PLS
-
             // Closes conection
             database.CloseConnection();
 
@@ -298,6 +296,7 @@ namespace SQLite_GUI
                 dataAdapter = new SQLiteDataAdapter(cmd);
                 SQLiteCommandBuilder builder = new SQLiteCommandBuilder(dataAdapter);
 
+                this.OutputGrid.ItemsSource = dt.DefaultView;
                 dataAdapter.Update(dt);
 
                 database.CloseConnection();
