@@ -101,13 +101,33 @@ namespace SQLite_GUI
         {
             PopUpWindow window = new PopUpWindow("Enter name of new table", "Create new table", 0);
             window.Title = "New Table";
-            window.Show();
+            window.ShowDialog();
+            if(window.GetInput() != "")
+                CreateTable(window.GetInput());
+            
         }
 
+        /// <summary>
+        /// Updates changes made to table
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Update_Button_Click(object sender, RoutedEventArgs e)
         {
             if (GetSelectedItem() != "")
                 UpdateTable(GetDataTable(GetSelectedItem()));
+            return;
+        }
+
+        /// <summary>
+        /// Drops selected table
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Delete_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(GetSelectedItem() != "")
+                DropTable(GetSelectedItem());
             return;
         }
 
@@ -124,11 +144,56 @@ namespace SQLite_GUI
         }
         #endregion
 
-
-        public void NewTable(string name)
+        #region Public helpers
+        /// <summary>
+        /// Creates a new table, if ne doesn't already exist
+        /// </summary>
+        /// <param name="name">Name for new table</param>
+        public void CreateTable(string name)
         {
+            try
+            {
+                // IRRELEVENT AL MEH
+                if (TableExists(name))
+                {
+                    throw new Exception();
+                    return;
+                }
 
+                ExecuteSQLite(string.Format("CREATE TABLE IF NOT EXISTS {0} (id INTEGER PRIMARY KEY AUTOINCREMENT);", name));
+                UpdateTableList();
+                MessageLabel.Content = string.Format("Table {0} successfully created.", name);
+
+            }
+            catch (Exception e)
+            {
+                this.MessageLabel.Content = string.Format("A table by that name already exists. {0}", name);
+            }
         }
+
+        /// <summary>
+        /// Drops a table if it exists.
+        /// </summary>
+        /// <param name="name">Name of table to drop</param>
+        public void DropTable(string name)
+        {
+            try
+            {
+                // ISTO MOZDA NEPOTREBNO
+                
+
+                ExecuteSQLite(string.Format("DROP TABLE IF EXISTS {0}", name));
+                MessageLabel.Content = string.Format("Dropped table {0}", name);
+                UpdateTableList();
+
+            }
+            catch(Exception e)
+            {
+                MessageLabel.Content = string.Format("Table doesn't exist. {0}", name);
+            }
+        }
+        #endregion
+
 
         /// <summary>
         /// Update tables list

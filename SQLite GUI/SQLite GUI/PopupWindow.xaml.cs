@@ -20,7 +20,7 @@ namespace SQLite_GUI
     public partial class PopUpWindow : Window
     {
 
-        private int type;// 0-New, 1-Drop, 2-Undefined yet
+        private string InputText;
 
         public PopUpWindow(string label, string button, int type)
         {
@@ -30,7 +30,6 @@ namespace SQLite_GUI
             this.PopupButton.Content = button;
             try
             {
-                this.type = type;
                     }catch(Exception e)
             {
                 throw new InvalidOperationException($"Invalid type of windows selected " + e.Message);
@@ -44,20 +43,8 @@ namespace SQLite_GUI
         /// <param name="e"></param>
         private void PopupButton_Click(object sender, RoutedEventArgs e)
         {
-            switch (type)
-            {
-                case 0:
-                    //NewTable(GetInput());// Uraditi u main window?
-                    break;
-
-                case 1:
-                    //DropTable(GetInput());
-                    break;
-                    
-
-                default:
-                    return;
-            }
+            InputText = GetInput();
+            this.Close();
         }
 
         #region getters setters
@@ -88,6 +75,11 @@ namespace SQLite_GUI
         {
             //string inputText = new TextRange(PopupInput.Document.ContentStart, PopupInput.Document.ContentEnd).Text;
             return PopupInput.Text;
+        }
+
+        public string GetText()
+        {
+            return InputText;
         }
 
         #endregion
