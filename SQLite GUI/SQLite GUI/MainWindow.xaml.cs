@@ -99,12 +99,23 @@ namespace SQLite_GUI
         /// </summary>
         private void New_Button_Click(object sender, RoutedEventArgs e)
         {
-            PopUpWindow window = new PopUpWindow("Enter name of new table", "Create new table", 0);
+            PopUpWindow window = new PopUpWindow("Enter name of new table", "Create new table");
             window.Title = "New Table";
+
+            // Shows PopUpWindow and waits for the user to input
             window.ShowDialog();
-            if(window.GetInput() != "")
+
+            try
+            {
+                if (window.GetInput() == "") {
+                    throw new Exception();
+                    return;
+                }
                 CreateTable(window.GetInput());
-            
+            }catch(Exception ex)
+            {
+                MessageLabel.Content = String.Format("Invalid table name. \"{0}\"", window.GetInput());
+            }
         }
 
         /// <summary>
@@ -126,9 +137,48 @@ namespace SQLite_GUI
         /// <param name="e"></param>
         private void Delete_Button_Click(object sender, RoutedEventArgs e)
         {
-            if(GetSelectedItem() != "")
-                DropTable(GetSelectedItem());
+            string item = GetSelectedItem();
+            try
+            {
+                if (item == "")
+                {
+                    throw new Exception();
+                    return;
+                }
+                DropTable(item);
+            }catch(Exception ex)
+            {
+                MessageLabel.Content = string.Format("Invalid table to delete. \"{0}\"", item);
+            }
             return;
+        }
+
+        private void New_Column_Button_Click(object sender, RoutedEventArgs e)
+        {
+            PopUpWindow window = new PopUpWindow("Enter:[column name] [column type]", "Create new column");
+            window.Title = "New Column";
+
+            // Shows PopUpWindow and waits for the user to input
+            window.ShowDialog();
+            string[] input = window.GetInput().Split();
+            string table_name = GetSelectedItem();
+            string col_name = input[0];
+            string col_type = input[1];
+
+            try
+            {
+                if(col_name == "")
+                {
+                    throw new Exception();
+                    return;
+                }
+
+                AddColumn(col_name, col_type, table_name);
+
+            }catch(Exception ex)
+            {
+                MessageLabel.Content = string.Format("Invalid column name. \"{0}\"", col_name);
+            }
         }
 
         /// <summary>
@@ -386,7 +436,7 @@ namespace SQLite_GUI
         }
 
         private Boolean TableExists(string name) {
-            return false;
+            return true;
         }
 
         /// <summary>
@@ -422,7 +472,34 @@ namespace SQLite_GUI
             }
         }
 
+        /// <summary>
+        /// Creates a column if the table exists
+        /// </summary>
+        /// <param name="col_name">Name of column</param>
+        /// <param name="col_type">Type of column</param>
+        /// <param name="table_name">Name of table to add the column to</param>
+        private void AddColumn(string col_name, string col_type, string table_name)
+        {
+            try
+            {
+                if (!TableExists(table_name))
+                {
+                    throw new Exception();
+                    return;
+                }
+                
+                ExecuteSQLite(string.Format("ALTER TABLE {0} ADD COLUMN {1} {2};", table_name, col_name, col_type));
+
+            }
+            catch(Exception e)
+            {
+                MessageLabel.Content = string.Format("Invalid table name. \"{0}\")", table_name);
+            }
+        }
+
         #endregion
+        TODO ZAVRISITI IF TABLE EXISTS
+            POPRAVITI DROP TABLE
+            POPRAVITI UPDATEOVANJE LISTE POSLE DROPOVANJA
     }
 }
-TODO POCISTITI KOD OD BESKORISNIH METODA I SL I RAZVITI DODAVANJE KOLONE

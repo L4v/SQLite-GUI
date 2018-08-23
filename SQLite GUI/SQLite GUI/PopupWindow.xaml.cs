@@ -20,30 +20,29 @@ namespace SQLite_GUI
     public partial class PopUpWindow : Window
     {
 
-        private string InputText;
-
-        public PopUpWindow(string label, string button, int type)
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="label"></param>
+        /// <param name="button"></param>
+        public PopUpWindow(string label, string button)
         {
             InitializeComponent();
 
+            // Sets the window label text
             this.PopupText.Text = label;
+
+            // Sets the button text
             this.PopupButton.Content = button;
-            try
-            {
-                    }catch(Exception e)
-            {
-                throw new InvalidOperationException($"Invalid type of windows selected " + e.Message);
-            }
         }
 
         /// <summary>
-        /// Calls function base on which type of window it is
+        /// Closes the PopUpWindow so MainWindow can get the text
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void PopupButton_Click(object sender, RoutedEventArgs e)
         {
-            InputText = GetInput();
             this.Close();
         }
 
@@ -75,11 +74,6 @@ namespace SQLite_GUI
         {
             //string inputText = new TextRange(PopupInput.Document.ContentStart, PopupInput.Document.ContentEnd).Text;
             return PopupInput.Text;
-        }
-
-        public string GetText()
-        {
-            return InputText;
         }
 
         #endregion
