@@ -204,11 +204,11 @@ namespace SQLite_GUI
             try
             {
                 // IRRELEVENT AL MEH
-                if (TableExists(name))
+                /*if (TableExists(name))
                 {
                     throw new Exception();
                     return;
-                }
+                }*/
 
                 ExecuteSQLite(string.Format("CREATE TABLE IF NOT EXISTS {0} (id INTEGER PRIMARY KEY AUTOINCREMENT);", name));
                 UpdateTableList();
@@ -229,10 +229,12 @@ namespace SQLite_GUI
         {
             try
             {
-                // ISTO MOZDA NEPOTREBNO
-                
+                if (!TableExists(name))
+                    throw new Exception();
 
-                ExecuteSQLite(string.Format("DROP TABLE IF EXISTS {0}", name));
+                database.OpenConnection();
+                ExecuteSQLite(string.Format("DROP TABLE {0}", name));
+                database.CloseConnection();
                 MessageLabel.Content = string.Format("Dropped table {0}", name);
                 UpdateTableList();
 
@@ -436,7 +438,24 @@ namespace SQLite_GUI
         }
 
         private Boolean TableExists(string name) {
-            return true;
+                using (SQLiteCommand cmd = new SQLiteCommand())
+                {
+                database.OpenConnection();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = database.myConnection;
+                    cmd.CommandText = "SELECT COUNT(*) AS QtRecords FROM sqlite_master WHERE type = 'table' AND name = @name";
+                    cmd.Parameters.AddWithValue("@name", name);
+                if (Convert.ToInt32(cmd.ExecuteScalar()) == 0)
+                {
+                    database.CloseConnection();
+                    return false;
+                }
+                else
+                {
+                    database.CloseConnection();
+                    return true;
+                }
+            }
         }
 
         /// <summary>
@@ -447,7 +466,9 @@ namespace SQLite_GUI
 
             try
             {
+                ExecuteSQLite(string.Format("TRUNCATE TABLE {0}", dt.TableName));
                 ExecuteSQLite(string.Format("DELETE FROM {0}", dt.TableName));
+                //ExecuteSQLite(string.Format("ALTER TABLE {0} AUTO_INCREMENT = 1;", dt.TableName));
                 database.OpenConnection();
                 cmd = new SQLiteCommand();
                 cmd = GetCommand("SELECT * FROM " + dt.TableName);
@@ -498,8 +519,24 @@ namespace SQLite_GUI
         }
 
         #endregion
-        TODO ZAVRISITI IF TABLE EXISTS
-            POPRAVITI DROP TABLE
-            POPRAVITI UPDATEOVANJE LISTE POSLE DROPOVANJA
+        //TODO: ZAVRISITI IF TABLE EXISTS
+        // POPRAVITI DROP TABLE
+        // POPRAVITI UPDATEOVANJE LISTE POSLE DROPOVANJA
+
+        // BAGOVI:
+        /*
+         * Posle brisanja tabele, baca exception kao da pokusava obrisati vec postojecu tabelu, iako je uspeo obrisati.
+         * !!Konflikt je verovatno kod cinjenice kako radi prikazivanje tabele kada se selektuje iz liste, moracu naci
+         * workaround
+         * 
+         * Kreiranje tabele cije je ime vec postojalo, iako je bila obrisana, stvara bug gde kaze da vec postoji,
+         * ali je svejedno kreira.
+         * 
+         * Brisanje svih redova tabele pa ponovno pisanje je jedini nacin da radi update, ali AUTOINCREMENT ce povecati
+         * PRIMARY_KEY za 1 posle svakog update, probao sam TRUNCATE bez uspeha, jedino mozda DROPovanje cele tabele pa
+         * ponovno pisanje?
+         * 
+         * Mozda jos, ovo su glavni.
+         */
     }
 }
