@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\App.xaml
-2614666039
+3-784678110
 
-7-1768179532
+8-861222132
 19-1575023335
-MainWindow.xaml;PopUpWindow.xaml;
+LoadDatabaseWindow.xaml;MainWindow.xaml;PopUpWindow.xaml;
 
 False
 

@@ -10,29 +10,63 @@ namespace SQLite_GUI
 {
 
 
-    class Database
+    public class Database
     {
-        public SQLiteConnection myConnection;
-
+        public SQLiteConnection connection;
 
         /// <summary>
-        /// Default constructor
+        /// Constructor without password
         /// </summary>
-        public Database(String database_name) {
-            // Creates a new connection
-            myConnection = new SQLiteConnection("Data Source="+ database_name);
+        /// <param name="database_name"></param>
+        public Database(string database_name)
+        {
+            connection = new SQLiteConnection("Data Source=" + database_name);
 
             // Create a new database file if one doesn't exist
-            if (!File.Exists("./"+database_name))
-                 SQLiteConnection.CreateFile(database_name);
+            try
+            {
+                if (File.Exists("./" + database_name))
+                    throw new FileFormatException();
+
+                SQLiteConnection.CreateFile(database_name);
+
+            }
+            catch (Exception e)
+            {
+                // TODO: IMPLEMENT ERROR
+            }
+        }
+        
+        /// <summary>
+        /// Default constructor with password
+        /// </summary>
+        public Database(string database_name, string database_password) {
+            // Creates a new connection
+            connection = new SQLiteConnection("Data Source="+ database_name);
+
+            // Sets the password for the new database
+            connection.SetPassword(database_password);
+
+            // Create a new database file if one doesn't exist
+            try
+            {
+                if (File.Exists("./" + database_name))
+                    throw new FileFormatException();
+
+                SQLiteConnection.CreateFile(database_name);
+
+            }catch(Exception e)
+            {
+                // TODO: IMPLEMENT ERROR
+            }
         }
 
         /// <summary>
         /// If the database connection is closed, open it
         /// </summary>
         public void OpenConnection() {
-            if (myConnection.State != System.Data.ConnectionState.Open)
-                myConnection.Open();
+            if (connection.State != System.Data.ConnectionState.Open)
+                connection.Open();
             return;
         }
 
@@ -41,9 +75,14 @@ namespace SQLite_GUI
         /// </summary>
         public void CloseConnection()
         {
-            if (myConnection.State == System.Data.ConnectionState.Open)
-                myConnection.Close();
+            if (connection.State == System.Data.ConnectionState.Open)
+                connection.Close();
             return;
+        }
+
+        public void ChangePassword(string new_password)
+        {
+            connection.ChangePassword(new_password);
         }
 
     }

@@ -23,19 +23,25 @@ namespace SQLite_GUI
 
         #region Private helpers
         // Create new Database object
-        private Database database = new Database("test.sqlite3");
+        //private Database database = new Database("test.sqlite3");
+        private Database database;
         private DataTable dataTable;
         private DataSet dataSet;
         private SQLiteDataAdapter dataAdapter;
         private SQLiteCommand cmd;
         #endregion
 
+        
+
         #region Constructor
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MainWindow()
+        public MainWindow(Database database)
         {
+
+            this.database = database;
+
             InitializeComponent();
 
             NewGUI();
@@ -282,7 +288,7 @@ namespace SQLite_GUI
             dataTable = new DataTable();
 
             // Create new data adapter
-            dataAdapter = new SQLiteDataAdapter(query, database.myConnection);
+            dataAdapter = new SQLiteDataAdapter(query, database.connection);
 
             // Fill table
             dataAdapter.Fill(dataTable);
@@ -314,7 +320,7 @@ namespace SQLite_GUI
         /// <returns></returns>
         private SQLiteCommand GetCommand(string query)
         {
-            cmd = new SQLiteCommand(query, database.myConnection);
+            cmd = new SQLiteCommand(query, database.connection);
 
             return cmd;
         }
@@ -350,7 +356,7 @@ namespace SQLite_GUI
             database.OpenConnection();
 
             // Create new connection
-            SQLiteConnection connection = new SQLiteConnection(database.myConnection);
+            SQLiteConnection connection = new SQLiteConnection(database.connection);
 
             // Sqlite data reader
             SQLiteDataReader reader = GetCommand("SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY 1").ExecuteReader();
@@ -442,7 +448,7 @@ namespace SQLite_GUI
                 {
                 database.OpenConnection();
                     cmd.CommandType = CommandType.Text;
-                    cmd.Connection = database.myConnection;
+                    cmd.Connection = database.connection;
                     cmd.CommandText = "SELECT COUNT(*) AS QtRecords FROM sqlite_master WHERE type = 'table' AND name = @name";
                     cmd.Parameters.AddWithValue("@name", name);
                 if (Convert.ToInt32(cmd.ExecuteScalar()) == 0)

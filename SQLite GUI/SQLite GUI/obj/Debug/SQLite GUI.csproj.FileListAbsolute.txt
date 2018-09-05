@@ -52,3 +52,5 @@ C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\Po
 C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\PopUpWindow.baml
 C:\Users\jigsaw-game\workspace\cshrp-practice\SQlite_GUI\SQLite GUI\SQLite GUI\obj\Debug\PopUpWindow.g.cs
 C:\Users\jigsaw-game\workspace\cshrp-practice\SQlite_GUI\SQLite GUI\SQLite GUI\obj\Debug\PopUpWindow.baml
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\LoadDatabaseWindow.g.cs
+C:\Users\Laza\workspace\SQLite-GUI\SQLite-GUI\SQLite GUI\SQLite GUI\obj\Debug\LoadDatabaseWindow.baml
