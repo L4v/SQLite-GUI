@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Collections.Generic;
 using System.Windows.Data;
 using System.Data.SqlClient;
+using Microsoft.Win32;
 
 namespace SQLite_GUI
 
@@ -29,22 +30,30 @@ namespace SQLite_GUI
         private DataSet dataSet;
         private SQLiteDataAdapter dataAdapter;
         private SQLiteCommand cmd;
+        
         #endregion
 
-        
+
 
         #region Constructor
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MainWindow(Database database)
+        public MainWindow()
         {
-
-            this.database = database;
 
             InitializeComponent();
 
-            NewGUI();
+            // Disables all buttons, except for the LoadButton, until a database is loaded
+            foreach (Button btn in this.LowerGrid.Children)
+                if(btn.Name != "LoadButton")
+                    btn.IsEnabled = false;
+
+             foreach (Button btn in this.UpperGrid.Children)
+                if (btn.Name != "LoadButton")
+                    btn.IsEnabled = false;
+
+            //NewGUI();
         }
 
         /// <summary>
@@ -54,6 +63,14 @@ namespace SQLite_GUI
         {
             // Clears input text
             //this.InputText.Document.Blocks.Clear();
+
+            // Enables all buttons
+            // Disables all buttons, except for the LoadButton, until a database is loaded
+            foreach (Button btn in this.LowerGrid.Children)
+                btn.IsEnabled = true;
+
+            foreach (Button btn in this.UpperGrid.Children)
+                btn.IsEnabled = true;
 
             // Clear message label
             this.MessageLabel.Content = String.Empty;
@@ -65,6 +82,40 @@ namespace SQLite_GUI
         #endregion
 
         #region clicks and such
+
+        /// <summary>
+        /// Loads selected database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Load_Database_Button_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+
+            // Filters out which filetypes to use, TODO
+            dialog.Filter = "Database files (*.sqlite3)|*.sqlite3";
+
+            try
+            {
+                // Get selected file name
+                if (dialog.ShowDialog() == true)
+                    database = new Database(dialog.FileName);
+            }catch(Exception ex)
+            {
+                // NEEDS IMPLEMENTING
+                MessageLabel.Content = string.Format("Invalid database file! {0}", ex.Message);
+
+                database = null;
+            }
+
+            // Doesn't actually show, 'cause it's overwritten on NewGUI() call
+            MessageLabel.Content = string.Format("Loaded database!");
+
+            if (database != null)
+                NewGUI();
+
+        }
+
         /// <summary>
         /// Processes command inside textbox
         /// </summary>
@@ -111,16 +162,20 @@ namespace SQLite_GUI
             // Shows PopUpWindow and waits for the user to input
             window.ShowDialog();
 
+            string tableName = window.GetInput();
+
             try
             {
-                if (window.GetInput() == "") {
+
+
+                if (tableName == "") {
                     throw new Exception();
                     return;
                 }
-                CreateTable(window.GetInput());
+                CreateTable(tableName);
             }catch(Exception ex)
             {
-                MessageLabel.Content = String.Format("Invalid table name. \"{0}\"", window.GetInput());
+                MessageLabel.Content = String.Format("Invalid table name. \"{0}\"", tableName);
             }
         }
 
@@ -528,6 +583,11 @@ namespace SQLite_GUI
         //TODO: ZAVRISITI IF TABLE EXISTS
         // POPRAVITI DROP TABLE
         // POPRAVITI UPDATEOVANJE LISTE POSLE DROPOVANJA
+        // NAMESTITI PROVERU LOSE DODATE BAZE
+
+        /*DODATO:
+         * LoadDatabase
+         */
 
         // BAGOVI:
         /*
@@ -544,5 +604,7 @@ namespace SQLite_GUI
          * 
          * Mozda jos, ovo su glavni.
          */
+
+
     }
 }

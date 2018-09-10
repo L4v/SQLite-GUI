@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SQLite_GUI"
              StartupUri="MainWindow.xaml"
-             Startup="ApplicationStart"
              >
 
+    <!--StartupUri="MainWindow.xaml" STAVITI U APPLICATION TAG GORE-->
     <Application.Resources>
          
     </Application.Resources>

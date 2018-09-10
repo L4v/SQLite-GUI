@@ -13,8 +13,15 @@ namespace SQLite_GUI
     /// </summary>
     public partial class App : Application
     {
-        private void ApplicationStart(object sender, StartupEventArgs e)
+        /*private void ApplicationStart(object sender, StartupEventArgs e)
         {
+            
+        }*/
+
+        /*protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
             Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
             var dialog = new LoadDatabaseWindow();
@@ -26,13 +33,11 @@ namespace SQLite_GUI
                 Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
                 Current.MainWindow = main;
                 main.Show();
-            }*/
-            if (dialog.ShowDialog() == true)
-            {
-                MainWindow main = new MainWindow(dialog.GetDatabase());
-                main.Show();
-                TODO AAAAAAAAAAAAAAAAAAAAAA POPRAVITI OVAJ NERED
-            }
-        }
+            }(*)/
+           // dialog.ShowDialog();
+           // MainWindow main = new MainWindow(dialog.GetDatabase(), "TEST");
+           // main.Show();
+        }*/
+
     }
 }

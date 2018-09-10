@@ -33,11 +33,11 @@
                 -->
                 
                 <!-- Main StackPanel -->
-                <StackPanel Orientation="Vertical">
+                <StackPanel x:Name="MainStackPanel" Orientation="Vertical">
                     
                     <!-- Higher StackPanel -->
                     <StackPanel Orientation="Vertical">
-                        <Grid>
+                        <Grid x:Name="UpperGrid">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
@@ -52,7 +52,7 @@
                     
                     <!-- Lower StackPanel -->
                     <StackPanel Orientation="Vertical">
-                        <Grid>
+                        <Grid x:Name="LowerGrid">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
@@ -60,6 +60,8 @@
                             </Grid.ColumnDefinitions>
 
                             <Button Grid.Column="0" Margin="10 10 10 0" Click="New_Column_Button_Click">New Column</Button>
+
+                            <Button x:Name="LoadButton" Grid.Column="1" Margin="0 10 0 0" Click="Load_Database_Button_Click">Load database</Button>
                         
                         </Grid>
                     </StackPanel>
